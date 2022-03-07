@@ -1,0 +1,16 @@
+[{
+	"name":"책 이름1",
+	"publisher":"출판사1",
+	"author":"저자1",
+	"price":20000	
+},{
+	"name":"책 이름2",
+	"publisher":"출판사2",
+	"author":"저자2",
+	"price":15000
+},{
+	"name":"책 이름3",
+	"publisher":"출판사3",
+	"author":"저자3",
+	"price":25000
+}]

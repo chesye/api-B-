@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	function callAjax1(){
+		//ajax 통신 
+		var request = new XMLHttpRequest();
+		
+		request.onreadystatechange = function(){
+			if(request.readyState == 4 && request.status == 200){
+				document.getElementById("result").innerHTML = request.responseText;
+			}
+		}
+		
+		request.open("GET","/ajaxPJP/data/data1.txt", false);
+		request.send();
+		
+		
+	}
+	function callAjax2(){
+		var request = new XMLHttpRequest();
+		
+		request.onreadystatechange = function(){
+			if(request.readyState == 4 && request.status == 200){
+				document.getElementById("result").innerHTML = request.responseText;
+			}
+		}
+		request.open("GET","/ajaxPJP/data/data1.html",false);
+		request.send();
+	}
+	function callAjax3(){
+		var request = new XMLHttpRequest();
+		request.onreadystatechange = function(){
+			if(request.readyState == 4 && request.status ==200){
+				//object로 변경
+				var json = JSON.parse(request.responseText);
+				document.getElementById("result").innerHTML = json[0].name + "/"
+															+json[0].publisher +"/"
+															+json[0].author +"/"
+															+json[0].price;
+			}
+			request.open("GET","/ajaxPJP/data/data1.txt", false);
+			request.send();
+			
+		}
+		
+		
+	}
+	/*
+	4번 버튼 클릭시 data2.json에 있는 모든 정보를 id=result요소 안에 출력하시오.
+	*/
+	function callAjax4(){
+		var request = new XMLHttpRequest();
+		request.onreadystatechange = function(){
+			if(request.readyState==4 && request.status==200){
+				var json = JSON.parse(request.responseText);
+				var scName = json[0].name;
+				var stInfo = "";
+				for(var i=0 ; i<json[0].student.length;i++){
+					var student = json[0].student[i];
+					stInfo+="학생명:"+student.name+" / 나이:"+student.age+"<br>";				
+				}
+				document.getElementById("result").innerHTML = "["+scName+"]의 학생정보 <br>"+stInfo;
+			}
+		}
+		request.open("GET","/ajaxPJP/data/data2.json",false);
+		request.send();
+	}
+	function callAjax5(){
+		var request = new XMLHttpRequest();
+		request.onreadystatechange = function(){
+			if(request.readyState == 4 && request.status==200){
+				var xml = request.responseXML;
+				
+				var books = xml.getElementsByTagName("book");
+				
+				for(var i=0 ; i<books.length ; i++){
+					var book = books[i];
+					var name = book.getElementsByTagName("name")[0].textContent;
+					var publisher = book.getElementsByTagName("publisher")[0].textContent;
+					var author = book.getElementsByTagName("author")[0].textContent;
+					
+					console.log(author);
+					
+				}
+			}
+		}
+		request.open("GET","/ajaxPJP/data/data1.xml",false);
+		request.send();
+	}
+	function callAjax6(){
+		var request = new XMLHttpRequest();
+		request.onreadystatechange = function(){
+			if(request.readyState==4 && request.status==200){
+				var xml = request.responseXML;
+				
+				var school = xml.getElementsByTagName("school")[0];
+				var scName = school.getElementsByTagName("name")[0].textContent;
+				var students = school.getElementsByTagName("student");
+				
+				var stuHTML = "";
+				for(var i=0 ; i<students.length ; i++){
+					var student = students[i];
+					var name = student.getElementsByTagName("name")[0].textContent;
+					var age = student.getElementsByTagName("age")[0].textContent;
+					stuHTML += "학생이름 : "+name+"/나이 : "+age+"<br>";			
+				}
+				document.getElementById("result").innerHTML = "["+scName+"]<br>"+stuHTML;
+			}
+		}
+		request.open("GET","/ajaxPJP/data/data2.xml",false);
+		request.send();
+	}
+	
+</script>
+</head>
+<body>
+	<h2>ajax 통신 테스트 페이지</h2>
+	<button onclick="callAjax1()">callAjax1</button>
+	<button onclick="callAjax2()">callAjax2</button>
+	<button onclick="callAjax3()">callAjax3</button>
+	<button onclick="callAjax4()">callAjax4</button>
+	<button onclick="callAjax5()">callAjax5</button>
+	<button onclick="callAjax6()">callAjax6</button>
+	<div id="result">
+	</div>
+</body>
+</html>

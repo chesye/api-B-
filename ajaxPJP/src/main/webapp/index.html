@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	function callAjax(){
+		console.log(1);
+		//비동기 통신시 사용하는 객체 XMLHttpRequest
+		var request = new XMLHttpRequest();
+		//open() : 정보 호출 메소드
+		request.open("GET","data1.html",false); //true면 비동기 false면 동기
+			//동기 false : 요청한 것에서 응답을 기다리겠다
+			//비동기 true : 계속 자기일을 하다가 요청한 값이 오면 그때 처리하겠다
+		request.send();
+		
+		document.getElementById("result").innerHTML = request.responseText;
+	}
+</script>
+</head>
+<body>
+
+	<a href="javascript:callAjax()">ajaxTest1</a>
+	<div id="result"></div>
+</body>
+</html>

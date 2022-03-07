@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- 전속 버튼 클릭시 post방식으로 info.jsp로 데이터를 넘긴 후 다시 전달 받아 p id="result" 요소에 입력 내용을 출력해 주세요-->
+<script>
+	function submFn(){
+		var name = document.getElementById("name").value;
+		var age = document.getElementById("age").value;
+		var phone = document.getElementById("phone").value;
+		var addr = document.getElementById("addr").value;
+		
+		var request = new XMLHttpRequest();
+		request.onreadystatechange = function(){
+			if(request.readyState==4 && request.status==200){
+				document.getElementById("result").innerHTML = request.responseText;
+			}
+		}
+		request.open("POST","info.jsp",false);
+		request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		request.send("name="+name+"&age="+age+"&phone="+phone+"&addr="+addr);
+	}
+	
+</script>
+</head>
+<body>
+	<h2>입력데이터 ajax 통신하기</h2>
+	<p>
+		이름 : <input type="text" id="name">
+	</p>
+	<p>
+		나이 : <input type="text" id="age">
+	</p>
+	<p>
+		연락처 : <input type="text" id="phone">
+	</p>
+	<p>
+		주소 : <input type="text" id="addr">
+	</p>
+	<button onclick="submFn()">전송</button>
+	<p id="result"></p>
+</body>
+</html>
